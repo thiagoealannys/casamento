@@ -187,10 +187,22 @@
     .cursor,.cursor-follower { display:none; }
     .cta-btn,.map-btn { cursor:pointer; }
     .music-btn { cursor:pointer; bottom:24px; right:24px; }
+    .final-bg {
+  background-image: url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778442666/ca4_m4ozgm.jpg');
+  background-position: center top;
+}
   }
   @media(max-width:480px) {
     .manual-grid { grid-template-columns:1fr; }
   }
+
+  .mobile-slide { display: none; }
+.desktop-slide { display: block; }
+
+@media(max-width:768px) {
+  .desktop-slide { display: none; }
+  .mobile-slide { display: block; }
+}
 </style>
 </head>
 <body>
@@ -249,24 +261,46 @@
 <!-- CAROUSEL -->
 <section id="carousel-section">
   <div class="carousel-wrapper">
-    <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-slide">
-        <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438926/ca3_xd9s3u.jpg" alt="Thiago e Alannys">
-        <div class="carousel-overlay"></div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438926/ca3_xd9s3u.jpg" alt="Thiago e Alannys">
-        <div class="carousel-overlay"></div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca1_knfxah.jpg" alt="Thiago e Alannys">
-        <div class="carousel-overlay"></div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438931/ca4_nfvm2w.jpg" alt="Thiago e Alannys">
-        <div class="carousel-overlay"></div>
-      </div>
-    </div>
+   <div class="carousel-track" id="carouselTrack">
+  <!-- DESKTOP -->
+  <div class="carousel-slide desktop-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img3_rmnuqd.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide desktop-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img1_my1cru.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide desktop-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438928/sessaoallblack_naoadw.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide desktop-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessaoultima_rmtre8.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide desktop-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessao1_d7vbcl.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <!-- MOBILE -->
+  <div class="carousel-slide mobile-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438931/ca4_nfvm2w.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide mobile-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca1_knfxah.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide mobile-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca2_lwr582.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+  <div class="carousel-slide mobile-slide">
+    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438926/ca3_xd9s3u.jpg" alt="Thiago e Alannys">
+    <div class="carousel-overlay"></div>
+  </div>
+</div>
     <button class="carousel-arrow prev" id="prevBtn">&#8592;</button>
     <button class="carousel-arrow next" id="nextBtn">&#8594;</button>
     <div class="carousel-nav" id="carouselNav">
@@ -474,7 +508,8 @@
   let currentSlide=0;
   const track=document.getElementById('carouselTrack');
   const dots=[...document.querySelectorAll('.carousel-dot')];
-  const total=4;
+  const isMobile = window.innerWidth <= 768;
+const total = isMobile ? 4 : 5;
   let autoplay=null;
 
   function goTo(n){
