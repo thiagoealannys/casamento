@@ -15,7 +15,6 @@
     --gold: #c9a96e;
     --gold-light: #e8d5b0;
     --white: #f5f0eb;
-    --white-pure: #ffffff;
     --gray: #888880;
     --gray-light: #bbbbbb;
   }
@@ -40,7 +39,13 @@
 
   /* HERO */
   #hero { background:var(--black); text-align:center; padding:0; min-height:100svh; }
-  .hero-bg { position:absolute; inset:0; background-image:url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessao1_d7vbcl.jpg'); background-size:cover; background-position: 70% center top; filter:brightness(0.28) contrast(1.1); animation:heroZoom 20s ease-in-out infinite alternate; }
+  .hero-bg {
+    position:absolute; inset:0;
+    background-image:url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessao1_d7vbcl.jpg');
+    background-size:cover; background-position:center top;
+    filter:brightness(0.28) contrast(1.1);
+    animation:heroZoom 20s ease-in-out infinite alternate;
+  }
   @keyframes heroZoom { from{transform:scale(1.05)} to{transform:scale(1.12)} }
   .hero-overlay { position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 30%,rgba(5,5,5,0.65) 100%); }
   .hero-content { position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; padding:0 24px; }
@@ -67,20 +72,26 @@
   .welcome-text { font-family:'Raleway',sans-serif; font-size:clamp(14px,1.5vw,17px); font-weight:300; line-height:2; color:var(--gray-light); opacity:0; transition:opacity 1s ease .5s,transform 1s ease .5s; transform:translateY(20px); }
   .welcome-text.visible { opacity:1; transform:translateY(0); }
 
-  /* CAROUSEL */
+  /* ===================== CAROUSEL SYSTEM ===================== */
   #carousel-section { background:var(--black); padding:70px 0; min-height:auto; }
-  .carousel-wrapper { position:relative; width:100%; max-width:100vw; overflow:hidden; }
-  .carousel-track { display:flex; transition:transform .9s cubic-bezier(.77,0,.18,1); will-change:transform; }
-  .carousel-slide { min-width:100vw; height:85vh; position:relative; flex-shrink:0; }
-  .carousel-slide img { width:100%; height:100%; object-fit:cover; filter:brightness(.75) contrast(1.05); display:block; }
-  .carousel-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(5,5,5,.3) 0%,transparent 40%,rgba(5,5,5,.5) 100%); }
-  .carousel-nav { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:10; }
-  .carousel-dot { width:28px; height:1px; background:rgba(255,255,255,.3); cursor:pointer; transition:all .4s; border:none; padding:0; }
-  .carousel-dot.active { background:var(--gold); width:52px; }
-  .carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:10; background:rgba(5,5,5,.4); border:1px solid rgba(201,169,110,.2); color:var(--gold-light); font-size:18px; width:48px; height:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s; backdrop-filter:blur(8px); }
-  .carousel-arrow:hover { background:rgba(201,169,110,.1); border-color:var(--gold); }
-  .carousel-arrow.prev { left:24px; }
-  .carousel-arrow.next { right:24px; }
+
+  /* shared wrapper */
+  .c-wrapper { position:relative; width:100%; overflow:hidden; }
+  .c-track { display:flex; transition:transform .9s cubic-bezier(.77,0,.18,1); will-change:transform; height:85vh; }
+  .c-slide { width:100vw; flex:0 0 100vw; height:100%; position:relative; }
+  .c-slide img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(.78) contrast(1.05); display:block; }
+  .c-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(5,5,5,.3) 0%,transparent 40%,rgba(5,5,5,.5) 100%); }
+  .c-nav { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:10; }
+  .c-dot { width:28px; height:1px; background:rgba(255,255,255,.3); border:none; padding:4px 0; cursor:pointer; transition:all .4s; }
+  .c-dot.active { background:var(--gold); width:52px; }
+  .c-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:10; background:rgba(5,5,5,.4); border:1px solid rgba(201,169,110,.2); color:var(--gold-light); font-size:18px; width:48px; height:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s; backdrop-filter:blur(8px); }
+  .c-arrow:hover { background:rgba(201,169,110,.1); border-color:var(--gold); }
+  .c-arrow.prev { left:24px; }
+  .c-arrow.next { right:24px; }
+
+  /* desktop carousel visible by default, mobile hidden */
+  #carousel-desktop { display:block; }
+  #carousel-mobile  { display:none; }
 
   /* COUNTDOWN */
   #countdown { background:var(--dark); text-align:center; padding:110px 24px; }
@@ -167,42 +178,41 @@
   @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-  /* MUSIC BTN */
   .music-btn { position:fixed; bottom:32px; right:32px; z-index:200; width:44px; height:44px; border:1px solid rgba(201,169,110,.3); border-radius:50%; background:rgba(5,5,5,.8); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; cursor:none; transition:all .3s; color:var(--gold); font-size:16px; }
   .music-btn:hover { border-color:var(--gold); background:rgba(201,169,110,.1); }
 
-  /* MOBILE */
+  /* ===================== MOBILE ===================== */
   @media(max-width:768px) {
     nav { padding:20px 24px; }
     nav.scrolled { padding:14px 24px; }
     .hero-names { font-size:clamp(60px,18vw,90px); }
+    .hero-bg {
+      background-image:url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778443738/hero1_jmtgey.jpg');
+      background-position:center center;
+    }
     .info-cards { flex-direction:column; align-items:center; }
     .info-card { width:100%; max-width:280px; }
     .manual-grid { grid-template-columns:1fr 1fr; }
     .countdown-grid { gap:16px; }
     .countdown-sep { display:none; }
-    .carousel-slide { height:70vh; }
-    .carousel-arrow { width:36px; height:36px; font-size:14px; }
+    .c-track { height:70vh; }
+    .c-arrow { width:36px; height:36px; font-size:14px; }
     body { cursor:auto; }
     .cursor,.cursor-follower { display:none; }
     .cta-btn,.map-btn { cursor:pointer; }
     .music-btn { cursor:pointer; bottom:24px; right:24px; }
     .final-bg {
-  background-image: url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778442666/ca4_m4ozgm.jpg');
-  background-position: center top;
-}
+      background-image:url('https://res.cloudinary.com/dg7yxjild/image/upload/v1778442666/ca4_m4ozgm.jpg');
+      background-position:center top;
+    }
+    /* swap carousels */
+    #carousel-desktop { display:none; }
+    #carousel-mobile  { display:block; }
   }
+
   @media(max-width:480px) {
     .manual-grid { grid-template-columns:1fr; }
   }
-
-  .mobile-slide { display: none; }
-.desktop-slide { display: block; }
-
-@media(max-width:768px) {
-  .desktop-slide { display: none; }
-  .mobile-slide { display: block; }
-}
 </style>
 </head>
 <body>
@@ -217,7 +227,6 @@
 
 <button class="music-btn" id="musicBtn" title="Música" onclick="toggleMusic()">♪</button>
 
-<!-- AUDIO -->
 <audio id="bgMusic" loop preload="none">
   <source src="https://res.cloudinary.com/dg7yxjild/video/upload/v1778438986/turningpage_tzwcjn.mp3" type="audio/mpeg">
 </audio>
@@ -258,58 +267,47 @@
   </div>
 </section>
 
-<!-- CAROUSEL -->
+<!-- CAROUSEL SECTION -->
 <section id="carousel-section">
-  <div class="carousel-wrapper">
-   <div class="carousel-track" id="carouselTrack">
-  <!-- DESKTOP -->
-  <div class="carousel-slide desktop-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img3_rmnuqd.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide desktop-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img1_my1cru.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide desktop-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438928/sessaoallblack_naoadw.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide desktop-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessaoultima_rmtre8.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide desktop-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessao1_d7vbcl.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <!-- MOBILE -->
-  <div class="carousel-slide mobile-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438931/ca4_nfvm2w.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide mobile-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca1_knfxah.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide mobile-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca2_lwr582.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-  <div class="carousel-slide mobile-slide">
-    <img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438926/ca3_xd9s3u.jpg" alt="Thiago e Alannys">
-    <div class="carousel-overlay"></div>
-  </div>
-</div>
-    <button class="carousel-arrow prev" id="prevBtn">&#8592;</button>
-    <button class="carousel-arrow next" id="nextBtn">&#8594;</button>
-    <div class="carousel-nav" id="carouselNav">
-      <button class="carousel-dot active" data-index="0"></button>
-      <button class="carousel-dot" data-index="1"></button>
-      <button class="carousel-dot" data-index="2"></button>
-      <button class="carousel-dot" data-index="3"></button>
+
+  <!-- DESKTOP CAROUSEL (5 fotos landscape) -->
+  <div class="c-wrapper" id="carousel-desktop">
+    <div class="c-track" id="trackDesktop">
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img3_rmnuqd.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438927/img1_my1cru.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438928/sessaoallblack_naoadw.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessaoultima_rmtre8.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/sessao1_d7vbcl.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+    </div>
+    <button class="c-arrow prev" id="dPrev">&#8592;</button>
+    <button class="c-arrow next" id="dNext">&#8594;</button>
+    <div class="c-nav" id="dNav">
+      <button class="c-dot active" data-i="0"></button>
+      <button class="c-dot" data-i="1"></button>
+      <button class="c-dot" data-i="2"></button>
+      <button class="c-dot" data-i="3"></button>
+      <button class="c-dot" data-i="4"></button>
     </div>
   </div>
+
+  <!-- MOBILE CAROUSEL (4 fotos portrait) -->
+  <div class="c-wrapper" id="carousel-mobile">
+    <div class="c-track" id="trackMobile">
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438931/ca4_nfvm2w.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca1_knfxah.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438930/ca2_lwr582.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+      <div class="c-slide"><img src="https://res.cloudinary.com/dg7yxjild/image/upload/v1778438926/ca3_xd9s3u.jpg" alt="Thiago e Alannys"><div class="c-overlay"></div></div>
+    </div>
+    <button class="c-arrow prev" id="mPrev">&#8592;</button>
+    <button class="c-arrow next" id="mNext">&#8594;</button>
+    <div class="c-nav" id="mNav">
+      <button class="c-dot active" data-i="0"></button>
+      <button class="c-dot" data-i="1"></button>
+      <button class="c-dot" data-i="2"></button>
+      <button class="c-dot" data-i="3"></button>
+    </div>
+  </div>
+
 </section>
 
 <!-- COUNTDOWN -->
@@ -333,9 +331,7 @@
   <div class="section-divider-top"></div>
   <div class="ceremony-content">
     <h1 class="ceremony-h1 animate">Cerimônia &amp;<br>Recepção</h1>
-    <p class="ceremony-text animate">
-      Com a bênção de Deus e o amor que nos uniu, convidamos você para celebrar conosco o início do nosso para sempre.
-    </p>
+    <p class="ceremony-text animate">Com a bênção de Deus e o amor que nos uniu, convidamos você para celebrar conosco o início do nosso para sempre.</p>
     <div class="info-cards animate">
       <div class="info-card">
         <span class="info-card-icon">📅</span>
@@ -353,9 +349,7 @@
         <span class="info-card-value">Chácara Amor Eterno<br>Itapecerica da Serra</span>
       </div>
     </div>
-    <a href="https://www.google.com/maps/search/?api=1&query=Estr.+Abias+da+Silva,+5450+-+Mombaça,+Itapecerica+da+Serra+-+SP,+06868-700" target="_blank" class="map-btn">
-      📍 &nbsp;Ver no mapa
-    </a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Estr.+Abias+da+Silva,+5450+-+Mombaça,+Itapecerica+da+Serra+-+SP,+06868-700" target="_blank" class="map-btn">📍 &nbsp;Ver no mapa</a>
   </div>
   <div class="section-divider"></div>
 </section>
@@ -383,11 +377,9 @@
   <div class="dresscode-content">
     <span class="section-label animate">Dress Code</span>
     <h2 class="dresscode-big animate">All<br>Black</h2>
-    <p class="dresscode-highlight animate">O traje é inteiramente preto</p>
+    <p class="dresscode-highlight animate">O traje obrigatório é inteiramente preto</p>
     <p class="dresscode-sub animate">Elegante &middot; Sofisticado &middot; Obrigatório</p>
-    <p class="dresscode-text animate">
-      Nosso casamento seguirá uma paleta exclusiva em preto. Pedimos gentilmente que todos os convidados respeitem o dress code do evento.
-    </p>
+    <p class="dresscode-text animate">Nosso casamento seguirá uma paleta exclusiva em preto. Pedimos gentilmente que todos os convidados respeitem o dress code do evento.</p>
     <span class="noiva-note animate">⚪ Branco é a cor da noiva</span>
   </div>
   <div class="section-divider"></div>
@@ -398,12 +390,8 @@
   <div class="gifts-inner">
     <span class="section-label animate">Sugestão de Presente</span>
     <h1 class="gifts-h1 animate">Lista de<br>Presentes</h1>
-    <p class="gift-text animate">
-      Sua presença já é o maior presente que poderíamos receber. Mas se desejar nos presentear, preparamos uma lista especial com muito carinho.
-    </p>
-    <a href="https://sites.icasei.com.br/alannysethiago/places/17" target="_blank" class="cta-btn animate">
-      🎁 &nbsp;Ver lista de presentes
-    </a>
+    <p class="gift-text animate">Sua presença já é o maior presente que poderíamos receber. Mas se desejar nos presentear, preparamos uma lista especial com muito carinho.</p>
+    <a href="https://sites.icasei.com.br/alannysethiago/places/17" target="_blank" class="cta-btn animate">🎁 &nbsp;Ver lista de presentes</a>
   </div>
 </section>
 
@@ -413,12 +401,8 @@
     <span class="section-label animate">Confirmação de Presença</span>
     <h2 class="welcome-title animate" style="font-size:clamp(32px,5vw,56px);">Você vai estar<br>com a gente?</h2>
     <div class="gold-divider animate"></div>
-    <p class="welcome-text animate" style="margin-bottom:48px;">
-      Confirme sua presença para que possamos nos preparar para recebê-lo com todo o carinho que você merece.
-    </p>
-    <a href="https://sites.icasei.com.br/alannysethiago/places/17" target="_blank" class="cta-btn animate">
-      ✓ &nbsp;Confirmar presença
-    </a>
+    <p class="welcome-text animate" style="margin-bottom:48px;">Confirme sua presença para que possamos nos preparar para recebê-lo com todo o carinho que você merece.</p>
+    <a href="https://sites.icasei.com.br/alannysethiago/places/17" target="_blank" class="cta-btn animate">✓ &nbsp;Confirmar presença</a>
   </div>
 </section>
 
@@ -429,9 +413,7 @@
   <div class="final-content">
     <span class="final-heart animate">🖤</span>
     <h2 class="final-names animate">Thiago<br>&amp;<br>Alannys</h2>
-    <p class="final-text animate">
-      Que Deus abençoe cada passo desta nova jornada que estamos começando juntos. Não poderíamos imaginar este momento sem você ao nosso lado.
-    </p>
+    <p class="final-text animate">Que Deus abençoe cada passo desta nova jornada que estamos começando juntos. Não poderíamos imaginar este momento sem você ao nosso lado.</p>
     <div class="gold-divider animate"></div>
     <p class="final-date animate">02 · 11 · 2026</p>
   </div>
@@ -443,120 +425,97 @@
 
 <script>
   // CURSOR
-  const cursor = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
-  let mouseX=0,mouseY=0,followerX=0,followerY=0;
-  document.addEventListener('mousemove',e=>{
-    mouseX=e.clientX; mouseY=e.clientY;
-    cursor.style.left=mouseX+'px'; cursor.style.top=mouseY+'px';
-  });
-  (function animateCursor(){
-    followerX+=(mouseX-followerX)*.12; followerY+=(mouseY-followerY)*.12;
-    follower.style.left=followerX+'px'; follower.style.top=followerY+'px';
-    requestAnimationFrame(animateCursor);
-  })();
+  const cursor=document.getElementById('cursor'),follower=document.getElementById('cursorFollower');
+  let mX=0,mY=0,fX=0,fY=0;
+  document.addEventListener('mousemove',e=>{mX=e.clientX;mY=e.clientY;cursor.style.left=mX+'px';cursor.style.top=mY+'px';});
+  (function loop(){fX+=(mX-fX)*.12;fY+=(mY-fY)*.12;follower.style.left=fX+'px';follower.style.top=fY+'px';requestAnimationFrame(loop);})();
   document.querySelectorAll('a,button').forEach(el=>{
     el.addEventListener('mouseenter',()=>{cursor.style.width='16px';cursor.style.height='16px';});
     el.addEventListener('mouseleave',()=>{cursor.style.width='8px';cursor.style.height='8px';});
   });
 
   // NAV
-  window.addEventListener('scroll',()=>{
-    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
-  });
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
 
   // SCROLL ANIMATIONS
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const el=entry.target;
-        const siblings=[...el.parentElement.querySelectorAll('.animate')];
-        const delay=siblings.indexOf(el)*120;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target,sibs=[...el.parentElement.querySelectorAll('.animate')],delay=sibs.indexOf(el)*120;
         setTimeout(()=>el.classList.add('visible'),delay);
-        observer.unobserve(el);
+        obs.unobserve(el);
       }
     });
   },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.animate').forEach(el=>obs.observe(el));
 
-  const manualObserver = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        document.querySelectorAll('.manual-item').forEach((item,i)=>{
-          setTimeout(()=>item.classList.add('visible'),i*80);
-        });
-        manualObserver.disconnect();
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        document.querySelectorAll('.manual-item').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*80));
       }
     });
-  },{threshold:.1});
-
-  document.querySelectorAll('.animate').forEach(el=>observer.observe(el));
-  manualObserver.observe(document.getElementById('manual'));
+  },{threshold:.1}).observe(document.getElementById('manual'));
 
   // COUNTDOWN
-  function updateCountdown(){
-    const wedding=new Date('2026-11-02T11:00:00-03:00');
-    const diff=wedding-new Date();
-    if(diff<=0){['days','hours','minutes','seconds'].forEach(id=>document.getElementById(id).textContent='00');return;}
-    document.getElementById('days').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
-    document.getElementById('hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
-    document.getElementById('minutes').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-    document.getElementById('seconds').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+  function tick(){
+    const d=new Date('2026-11-02T11:00:00-03:00')-new Date();
+    if(d<=0)return;
+    document.getElementById('days').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
+    document.getElementById('hours').textContent=String(Math.floor(d%86400000/3600000)).padStart(2,'0');
+    document.getElementById('minutes').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
+    document.getElementById('seconds').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
   }
-  updateCountdown(); setInterval(updateCountdown,1000);
+  tick(); setInterval(tick,1000);
 
-  // CAROUSEL
-  let currentSlide=0;
-  const track=document.getElementById('carouselTrack');
-  const dots=[...document.querySelectorAll('.carousel-dot')];
-  const isMobile = window.innerWidth <= 768;
-const total = isMobile ? 4 : 5;
-  let autoplay=null;
+  // ===================== CAROUSEL FACTORY =====================
+  function initCarousel(trackId, prevId, nextId, navId, total) {
+    const track = document.getElementById(trackId);
+    const dots  = [...document.getElementById(navId).querySelectorAll('.c-dot')];
+    let cur = 0, timer = null;
 
-  function goTo(n){
-    currentSlide=(n+total)%total;
-    track.style.transform=`translateX(-${currentSlide*100}vw)`;
-    dots.forEach((d,i)=>d.classList.toggle('active',i===currentSlide));
+    function goTo(n) {
+      cur = (n + total) % total;
+      track.style.transform = 'translateX(-' + (cur * 100) + 'vw)';
+      dots.forEach((d,i) => d.classList.toggle('active', i === cur));
+    }
+    function next() { goTo(cur + 1); }
+    function prev() { goTo(cur - 1); }
+    function startAuto() { timer = setInterval(next, 4500); }
+    function stopAuto()  { clearInterval(timer); }
+
+    document.getElementById(nextId).addEventListener('click', ()=>{ stopAuto(); next(); startAuto(); });
+    document.getElementById(prevId).addEventListener('click', ()=>{ stopAuto(); prev(); startAuto(); });
+    dots.forEach(d => d.addEventListener('click', ()=>{ stopAuto(); goTo(+d.dataset.i); startAuto(); }));
+
+    let tx = 0;
+    track.addEventListener('touchstart', e=>{ tx = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchend',   e=>{
+      const diff = tx - e.changedTouches[0].clientX;
+      if(Math.abs(diff) > 50){ stopAuto(); diff > 0 ? next() : prev(); startAuto(); }
+    }, {passive:true});
+
+    startAuto();
   }
-  function next(){goTo(currentSlide+1);}
-  function prev(){goTo(currentSlide-1);}
-  function startAuto(){autoplay=setInterval(next,4500);}
-  function stopAuto(){clearInterval(autoplay);}
 
-  document.getElementById('nextBtn').addEventListener('click',()=>{stopAuto();next();startAuto();});
-  document.getElementById('prevBtn').addEventListener('click',()=>{stopAuto();prev();startAuto();});
-  dots.forEach(d=>d.addEventListener('click',()=>{stopAuto();goTo(+d.dataset.index);startAuto();}));
-
-  // Touch/swipe
-  let touchStartX=0;
-  track.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-  track.addEventListener('touchend',e=>{
-    const diff=touchStartX-e.changedTouches[0].clientX;
-    if(Math.abs(diff)>50){stopAuto();diff>0?next():prev();startAuto();}
-  },{passive:true});
-
-  startAuto();
+  // init both independently
+  initCarousel('trackDesktop','dPrev','dNext','dNav', 5);
+  initCarousel('trackMobile', 'mPrev','mNext','mNav', 4);
 
   // MUSIC
-  const audio=document.getElementById('bgMusic');
-  const musicBtn=document.getElementById('musicBtn');
-  let musicPlaying=false;
-
+  const audio=document.getElementById('bgMusic'), musicBtn=document.getElementById('musicBtn');
+  let playing=false;
   function toggleMusic(){
-    if(!musicPlaying){
+    if(!playing){
       audio.volume=0;
       audio.play().then(()=>{
-        musicPlaying=true;
-        musicBtn.textContent='♫';
-        musicBtn.style.borderColor='rgba(201,169,110,0.6)';
-        let v=0;
-        const fade=setInterval(()=>{v=Math.min(v+.02,.7);audio.volume=v;if(v>=.7)clearInterval(fade);},100);
+        playing=true; musicBtn.textContent='♫'; musicBtn.style.borderColor='rgba(201,169,110,0.6)';
+        let v=0; const f=setInterval(()=>{v=Math.min(v+.02,.7);audio.volume=v;if(v>=.7)clearInterval(f);},100);
       }).catch(()=>{});
     } else {
       let v=audio.volume;
-      const fade=setInterval(()=>{v=Math.max(v-.02,0);audio.volume=v;if(v<=0){clearInterval(fade);audio.pause();}},80);
-      musicPlaying=false;
-      musicBtn.textContent='♪';
-      musicBtn.style.borderColor='rgba(201,169,110,0.3)';
+      const f=setInterval(()=>{v=Math.max(v-.02,0);audio.volume=v;if(v<=0){clearInterval(f);audio.pause();}},80);
+      playing=false; musicBtn.textContent='♪'; musicBtn.style.borderColor='rgba(201,169,110,0.3)';
     }
   }
 </script>
