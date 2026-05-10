@@ -503,6 +503,51 @@
   initCarousel('trackMobile', 'mPrev','mNext','mNav', 4);
 
   // MUSIC
+const audio=document.getElementById('bgMusic'), musicBtn=document.getElementById('musicBtn');
+let playing=false;
+
+function setPlaying(state){
+  playing=state;
+  musicBtn.textContent = state ? '⏸' : '▶';
+  musicBtn.style.borderColor = state ? 'rgba(201,169,110,0.6)' : 'rgba(201,169,110,0.3)';
+}
+
+function tryAutoplay(){
+  audio.volume=0;
+  audio.play().then(()=>{
+    setPlaying(true);
+    let v=0; const f=setInterval(()=>{v=Math.min(v+.02,.7);audio.volume=v;if(v>=.7)clearInterval(f);},100);
+  }).catch(()=>{
+    // bloqueado pelo navegador — toca no primeiro toque
+    const unlock=()=>{
+      audio.volume=0;
+      audio.play().then(()=>{
+        setPlaying(true);
+        let v=0; const f=setInterval(()=>{v=Math.min(v+.02,.7);audio.volume=v;if(v>=.7)clearInterval(f);},100);
+      }).catch(()=>{});
+      document.removeEventListener('touchstart',unlock);
+      document.removeEventListener('click',unlock);
+    };
+    document.addEventListener('touchstart',unlock,{once:true});
+    document.addEventListener('click',unlock,{once:true});
+  });
+}
+
+function toggleMusic(){
+  if(playing){
+    let v=audio.volume;
+    const f=setInterval(()=>{v=Math.max(v-.02,0);audio.volume=v;if(v<=0){clearInterval(f);audio.pause();}},80);
+    setPlaying(false);
+  } else {
+    audio.volume=0;
+    audio.play().then(()=>{
+      setPlaying(true);
+      let v=0; const f=setInterval(()=>{v=Math.min(v+.02,.7);audio.volume=v;if(v>=.7)clearInterval(f);},100);
+    }).catch(()=>{});
+  }
+}
+
+tryAutoplay();
   const audio=document.getElementById('bgMusic'), musicBtn=document.getElementById('musicBtn');
   let playing=false;
   function toggleMusic(){
